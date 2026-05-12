@@ -1,0 +1,50 @@
+project(MotionPlanning)
+
+cmake_minimum_required (VERSION 3.10)
+
+# Local build WITHOUT actual CARLA installation.
+# Uses stub headers for CARLA types; links against system libraries.
+# For the real CARLA build, use CMakeLists.txt (requires /opt/carla-source).
+
+add_definitions(-std=c++14 -O2 -DLOCAL_BUILD_WITHOUT_CARLA)
+
+set(CXX_FLAGS "-pthread -fPIC -Wall -Wno-unused-parameter -Wno-unused-variable")
+set(CMAKE_CXX_FLAGS "${CXX_FLAGS}")
+
+set(sources main.cpp behavior_planner_FSM.cpp motion_planner.cpp cubic_spiral.cpp
+    spiral_base.cpp integral.cpp spiral_equations.cpp cost_functions.cpp
+    utils.cpp velocity_profile_generator.cpp)
+
+# Stub CARLA headers (must come FIRST so they shadow any real CARLA headers)
+include_directories(BEFORE carla_stubs)
+
+# Eigen for Newton-Raphson Jacobian inversion
+include_directories(eigen-3.3.7)
+
+# System headers
+include_directories(/usr/local/include)
+include_directories(/usr/include)
+
+# uWebSockets: use the locally built version
+# The symlink /tmp/uws_include/uWS → /tmp/uWebSockets/src makes <uWS/uWS.h> work
+include_directories(/tmp/uws_include)
+link_directories(/tmp/uWebSockets/build)
+
+add_executable(planner ${sources})
+
+# Link against system libraries (no CARLA static libs needed for stub build)
+target_link_libraries(planner
+    z ssl uv
+    ${CMAKE_DL_LIBS}
+    pthread
+    boost_filesystem
+    boost_system
+    glog
+    gtest
+    uWS
+)
+
+set_target_properties(planner PROPERTIES
+    BUILD_RPATH "/tmp/uWebSockets/build"
+    INSTALL_RPATH "/tmp/uWebSockets/build"
+)

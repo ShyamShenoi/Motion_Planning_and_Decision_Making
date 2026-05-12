@@ -1,0 +1,44 @@
+# Build artifacts
+project/starter_files/planner
+project/starter_files/spiral_planner
+project/starter_files/CMakeFiles/
+project/starter_files/CMakeCache.txt
+project/starter_files/cmake_install.cmake
+project/starter_files/Makefile
+project/starter_files/*.o
+project/starter_files/*.a
+project/starter_files/CMakeLists.txt.carla_backup
+project/starter_files/build_local/
+project/starter_files/build_dir/
+
+# Docker volumes
+.docker_volumes/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local env / credentials
+.env
+.env.local
+
+# The walkthrough is LOCAL ONLY — never push
+WALKTHROUGH.md
+Motion_Planning_and_Decision_Making_WALKTHROUGH_OLD/
+
+# Claude Code memory (local only)
+.claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Token file
+token
