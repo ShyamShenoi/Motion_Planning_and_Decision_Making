@@ -183,11 +183,7 @@ These are available in:
 
 ---
 
-## Results
 
-Screenshots/GIFs to be added after successful run.
-
----
 
 ## Author
 
